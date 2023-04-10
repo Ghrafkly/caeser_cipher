@@ -1,43 +1,49 @@
+import output as out
+import read_file as rf
+import ranker as r
+
 from caeser import decoder as d
 from caeser import encoder as e
-import output as out
 
 
-def encode_cc(plain_text: str, shift: int):
-    plain_text = plain_text.lower()
-    char_pt = list(plain_text)
-    encoded = e.encoder(char_pt, shift % 95)
+def encode(plain_text: [], shift: int):
+    encoded = e.encoder(plain_text, shift % 95)
     return ''.join(encoded)
 
 
-def decode_cc(encoded_text: str) -> []:
+def decode(encoded_text: str) -> []:
     decoded = d.decoder(encoded_text)
     return decoded
 
 
-def encode():
-    shift = 1
-
-    plain_text = "Hello World"
-
-    encoded = encode_cc(plain_text, shift)
-
-    out.encode_output(plain_text, shift, encoded)
-
-
-def decode():
-    shift = 1
-
-    plain_text = "Hello World"
-
-    encoded = encode_cc(plain_text, shift)
-
-    out.decode_output(decode_cc(encoded))
+def create_dict():
+    words = rf.read_file()
+    return rf.load_dictionary(words)
 
 
 def main():
-    encode()
-    decode()
+    # Creates the dictionary in the Trie data structure
+    tt = create_dict()
+
+    # Plain text/user input & shift value (to the right)
+    plain_text = "The quick brown fox jumps over the lazy dog!?"
+    shift = 40
+
+    # Encode the text, and decode it
+    encoded = encode(list(plain_text.lower()), shift)
+    decoded = decode(encoded)
+
+    # Clean up decoded list for printing
+    for i, dec in enumerate(decoded):
+        decoded[i] = ''.join(dec)
+
+    # Determine ranking of the decoded values for printing
+    ranking = dict(sorted(r.rank(decoded, tt).items(), key=lambda x: x[1], reverse=True))
+
+    # Print results
+    out.encode_output(plain_text, shift, encoded)
+    out.decode_output(decoded)
+    out.ranking_output(ranking, decoded)
 
 
 if __name__ == '__main__':

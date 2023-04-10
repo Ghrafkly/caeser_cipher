@@ -1,28 +1,35 @@
+from tabulate import tabulate
+
+
 def encode_output(pt: str, shift: int, et: str):
-    # pt_width = et_width
-    width = len(pt)
+    headers = ["Plain Text", "Shift Value", "Encoded"]
+    rows = [([pt, shift, et])]
 
-    if len("encoded_text") > width:
-        width = len("encoded_text")
-
-    col_headers = ["plain_text", "shift value", "encoded_text"]
-    col_data = [pt, shift, et]
-
-    print(f"{col_headers[0]}".center(width) + " | " + f"{col_headers[1]}".center(11) + " | " + f"{col_headers[2]}".center(width))
-    print("-" * ((width * 2) + 17))
-    print(f"{col_data[0]}".center(width) + " | " + f"{col_data[1]}".center(11) + " | " + f"{col_data[2]}".center(width))
-    print("-" * ((width * 2) + 17))
+    table = tabulate(rows, headers=headers, tablefmt="heavy_outline", colalign=("center", "center", "center"))
+    print(table)
 
 
 def decode_output(decoded_arr: []):
-    encoded_text = ''.join(decoded_arr[len(decoded_arr) - 1])
+    headers = ["#", "Decoded"]
+    rows = []
 
-    width = len(encoded_text)
+    for i, e in enumerate(decoded_arr):
+        rows.append([i + 1, ''.join(decoded_arr[i])])
 
-    if len("encoded_text") > width:
-        width = len("encoded_text")
+    table = tabulate(rows, headers=headers, tablefmt="heavy_outline", colalign=("right", "center"))
+    print(table)
 
-    print(f"encoded_text".center(width) + " : " + f"{encoded_text}".center(width))
-    print("-" * ((width * 2) + 2))
-    for i, decoded in enumerate(decoded_arr):
-        print(f"{i + 1}".rjust(width) + " : " + f"{''.join(decoded)}".center(width))
+
+def ranking_output(ranking, decoded):
+    original = {}
+    for i, d in enumerate(decoded):
+        original[d] = i
+
+    headers = ["#", "Decoded", "Weight", "Rank"]
+    rows = []
+
+    for i, (encoded, weight) in enumerate(ranking.items()):
+        rows.append([original[encoded] + 1, encoded, weight, i + 1])
+
+    table = tabulate(rows, headers=headers, tablefmt="heavy_outline", colalign=("right", "center", "center", "center"))
+    print(table)

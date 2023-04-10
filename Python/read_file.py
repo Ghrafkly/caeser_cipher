@@ -1,16 +1,16 @@
-from data_structures import trie
+from data_structures import trie as t
 
 
-def main():
+def read_file() -> []:
+    words = []
     with open('utils/wordList.txt', 'r', encoding='utf8') as d:
-        words = [line.strip for line in d]
-        d.close()
+        for line in d:
+            words.append(line.strip().lower())
+    return words
 
-    t = trie.Trie()
 
+def load_dictionary(words) -> t.Trie:
+    data = t.Trie()
     for w in words:
-        t.insert(w)
-
-
-if __name__ == '__main__':
-    main()
+        data.insert(w)
+    return data
