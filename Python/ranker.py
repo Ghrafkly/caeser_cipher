@@ -6,10 +6,25 @@ def rank(encoded_text, tt: t.Trie) -> dict:
     ranking = {}
 
     for encoded in encoded_text:
-        cleaned = ''.join(c for c in encoded if c.isalpha() or c.isspace())
-        only_alpha.append(cleaned)
+        i = 0
+        for word in encoded.split():
+            for j in range(len(word)):
+                substring = word[j:]
+                while tt.search(substring):
+                    i += 1
+                    substring = substring[:-1]
 
-        i = sum(tt.search(word.lower()) is not False for word in cleaned.split())
+    # for encoded in encoded_text:
+    #     i = 0
+    #     for word in encoded.split():
+    #         hold = word
+    #         for _ in range(len(word)):
+    #             secondary = hold
+    #             while tt.search(secondary):
+    #                 i += 1
+    #                 secondary = secondary[:-1]
+    #             hold = hold[1:]
+
         ranking[encoded] = i
 
     return ranking

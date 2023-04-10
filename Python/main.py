@@ -41,8 +41,8 @@ def main():
     ranking = dict(sorted(r.rank(decoded, tt).items(), key=lambda x: x[1], reverse=True))
 
     # Print results
-    out.encode_output(plain_text, shift, encoded)
-    out.decode_output(decoded)
+    # out.encode_output(plain_text, shift, encoded)
+    # out.decode_output(decoded)
     out.ranking_output(ranking, decoded)
 
 
