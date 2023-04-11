@@ -38,7 +38,8 @@ def main():
         decoded[i] = ''.join(dec)
 
     # Determine ranking of the decoded values for printing
-    ranking = dict(sorted(r.rank(decoded, tt).items(), key=lambda x: x[1], reverse=True))
+    # ranking = dict(sorted(r.rank(decoded, tt).items(), key=lambda x: x[1], reverse=True))
+    ranking = sorted(r.rank(decoded, tt).items(), key=lambda x: x[1], reverse=True)
 
     # Print results
     # out.encode_output(plain_text, shift, encoded)
