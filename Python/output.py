@@ -31,5 +31,5 @@ def ranking_output(ranking, decoded):
     for i, (encoded, weight) in enumerate(ranking.items()):
         rows.append([original[encoded] + 1, encoded, weight, i + 1])
 
-    table = tabulate(rows, headers=headers, tablefmt="heavy_outline", colalign=("right", "center", "center", "center"))
+    table = tabulate(rows, headers=headers, tablefmt="heavy_outline", colalign=("right", "center", "right", "right"))
     print(table)
