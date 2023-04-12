@@ -27,7 +27,7 @@ def main():
 
     # Plain text/user input & shift value (to the right)
     plain_text = "The quick brown fox jumps over the lazy dog!?"
-    shift = 40
+    shift = 1
 
     # Encode the text, and decode it
     encoded = encode(list(plain_text.lower()), shift)

@@ -12,10 +12,10 @@ def rank(encoded_text: [], tt: t.Trie) -> dict:
         i = 0
         for word in only_alpha:
             for j in range(len(word)):
-                substring = word[j:]
-                while tt.search(substring.lower()):
-                    i += 1
-                    substring = substring[:-1]
+                substrings = [word[j:], word[:-j], word[j:-j]]
+                for substring in substrings:
+                    if tt.search(substring.lower()):
+                        i += 1
 
         ranking[encoded] = i
 
